@@ -2,30 +2,46 @@
 {
     public class Sphere
     {
-        private double _coordinateX = 0;
-        private double _coordinateY = 0;
-        private double _coordinateZ = 0;
+        private double _coordinateX;
+        private double _coordinateY;
+        private double _coordinateZ;
 
-        public double Radius { get; set; } = 1;
+        private double radius = 1;
+        public double Radius
+        {
+            get { return radius; }
+            set
+            {
+                if (value > 0)
+                {
+                    radius = value;
+                }
+                else
+                {
+                    radius = 1;
+                    Console.WriteLine("Некорректное значение радиуса, радиус должен быть больше 0! Присвоено значение 1 по умолчанию.");
+                }
+            }
+        }
 
         public Sphere() { }
 
         public Sphere(double radius, double coordinateX, double coordinateY, double coordinateZ)
         {
+            Radius = radius;
             _coordinateX = coordinateX;
             _coordinateY = coordinateY;
             _coordinateZ = coordinateZ;
-            Radius = radius;
         }
         public void GetVolume()
         {
-            double volume = Radius * Radius * Radius * Math.PI * 3 / 4;
+            double volume = radius * radius * radius * Math.PI * 3 / 4;
             Console.WriteLine(volume);
         }
 
         public void GetSquare()
         {
-            double square = Radius * Radius * Math.PI * 4;
+            double square = radius * radius * Math.PI * 4;
             Console.WriteLine(square);
         }
 
@@ -43,15 +59,8 @@
 
         public void IsPointInside(double someCoordinateX, double someCoordinateY, double someCoordinateZ)
         {
-            double comparison = Math.Sqrt((_coordinateX - someCoordinateX) * (_coordinateX - someCoordinateX) + (_coordinateY - someCoordinateY) * (_coordinateY - someCoordinateY) + (_coordinateZ - someCoordinateZ) * (_coordinateZ - someCoordinateZ));
-            if (comparison <= Radius)
-            {
-                Console.WriteLine("true");
-            }
-            else
-            {
-                Console.WriteLine("false");
-            }
+            bool IsPointInside = (_coordinateX - someCoordinateX) * (_coordinateX - someCoordinateX) + (_coordinateY - someCoordinateY) * (_coordinateY - someCoordinateY) + (_coordinateZ - someCoordinateZ) * (_coordinateZ - someCoordinateZ) <= radius * radius;
+            Console.WriteLine(IsPointInside);
         }
     }
 }
